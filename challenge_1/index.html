@@ -1,2 +1,37 @@
-
-
+<!DOCTYPE HTML>
+  <html>
+    <head>
+      <script src="app.js"></script>
+    </head>
+    <body>
+      <header>
+        <h1 style="text-decoration:underline forestgreen; color: forestgreen; text-align: center">Tic-Tac-Toe</h1>
+      </header>
+      <table>
+        <tbody>
+          <td>
+            <tr>
+              <td><button id="00" class="table" onclick="clickHandler('00')">__</button></td>
+              <td><button id="01" class="table" onclick="clickHandler('01')">__</button></td>
+              <td><button id="02" class="table" onclick="clickHandler('02')">__</button></td>
+            </tr>
+            <tr>
+              <td><button id="10" class="table" onclick="clickHandler('10')">__</button></td>
+              <td><button id="11" class="table" onclick="clickHandler('11')">__</button></td>
+              <td><button id="12" class="table" onclick="clickHandler('12')">__</button></td>
+            </tr>
+            <tr>
+              <td><button id="20" class="table" onclick="clickHandler('20')">__</button></td>
+              <td><button id="21" class="table" onclick="clickHandler('21')">__</button></td>
+              <td><button id="22" class="table" onclick="clickHandler('22')">__</button></td>
+            </tr>
+          </td>
+        </tbody>
+      </table>
+      <br>
+      <input type="button" value="Reset Game" onclick="resetGame()">
+      <div>
+          <p id="winner"></p>
+        </div>
+    </body>
+  </html>
