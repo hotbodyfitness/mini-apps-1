@@ -7,7 +7,16 @@
       <header>
         <h1 style="text-decoration:underline forestgreen; color: forestgreen; text-align: center">Tic-Tac-Toe</h1>
       </header>
-      <table>
+      <div style="float:right; padding-right:2em"><em>Enter Players' Names</em></div>
+      <div style="float:right; margin-top:0.5em; margin-right:-10.5em">
+        <p style="margin-left: -2em; margin-bottom: -1.2em">X's:</p>
+        <div id="xname" style="float:right; margin-right: 2.5em"><input type="text"></div>
+        <input type="submit" value="Play" id="xsubmit" style="float:right; margin-right:-15.9em">
+        <p style="margin-left: -2em; margin-bottom: -1.2em; margin-top: 1.5em">O's:</p>
+        <div id="oname" style="float:right; margin-right: 2.5em"><input type="text"></div>
+        <input type="submit" value="Play" id="osubmit" style="float:right; margin-right:-15.9em">
+      </div>
+      <table style="float: left">
         <tbody>
           <td>
             <tr>
@@ -28,8 +37,8 @@
           </td>
         </tbody>
       </table>
-      <br>
-      <input type="button" value="Reset Game" onclick="resetGame()">
+      <br><br><br><br><br>
+      <input type="button" value="Reset Game" style="float: left; margin-left:3px" onclick="resetGame()">
       <div>
           <p id="winner"></p>
         </div>
