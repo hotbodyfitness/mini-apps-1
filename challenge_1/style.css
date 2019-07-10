@@ -1,0 +1,18 @@
+body {
+  zoom: 150%;
+}
+
+button {
+  zoom: 120%;
+  border-radius: 10%;
+  background-color: white;
+  border-color: gray;
+}
+
+button:focus {
+  outline-color: green;
+}
+
+table {
+  padding-left: 10px;
+}
