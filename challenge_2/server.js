@@ -10,9 +10,10 @@ app.listen(8080, () => {
 app.use(express.static('client'));
 // app.use(bodyParser.json(/*{ type: 'application/*+json' }*/));
 // app.use(bodyParser.text({ type: 'text/html' }));
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:false}));
+// app.use(bodyParser.urlencoded({extended:true}));
 
-app.post('/post', (req, res) => {
+app.post('/', (req, res) => {
   // console.log('REQUEST************', req);
   console.log('JSON.stringify REQ.body***********', req.body);
   res.end();
