@@ -6,6 +6,8 @@ var GameState = {
           ['__', '__', '__']],
   xWins: false,
   oWins: false,
+  gravity: true,
+  rotated: 0,
   winnerLastRound: 'X'
 };
 
@@ -24,6 +26,60 @@ var UserInput = {
       clicked.value = 'Play';
     }
   },
+
+  changeGravity: () => {
+    var checkDiv = document.getElementById('checkDiv');
+    if (GameState.gravity) {
+      GameState.gravity = false;
+      checkDiv.innerHTML = '<input class="check" type="checkbox" onclick="UserInput.changeGravity()">'
+    } else {
+      GameState.gravity = true;
+    }
+  },
+
+  rotator: () => {
+    var table = document.getElementById('rotate');
+    var r = GameState.rotated;
+    table.animate([
+      {'transform': `rotate(${r}deg)`},
+      {'transform': `rotate(${r+90}deg)`}
+    ], {duration: 500}
+    );
+    table.style = `transform: rotate(${r+90}deg)`;
+    GameState.rotated += 90;
+    // UserInput.makeGravity();
+  },
+
+  // makeGravity: () => {
+  //   var index;
+  //   var slide = 0;
+  //   var id = '';
+  //   if (GameState.rotated % 360 === 0) {
+  //     if (GameState.board[0].includes('X')) {
+  //       index = GameState.board[0].indexOf('X');
+  //       if (GameState.board[1][index] === '__') {
+  //         slide++;
+  //         if (GameState.board[2][index] === '__') {
+  //           slide++;
+  //         }
+  //       }
+  //       GameState.board[slide][index] = 'X';
+  //       id += JSON.stringify(slide) + index;
+  //       document.getElementById(id).innerText = 'X';
+  //       document.getElementById(id).style = 'color: black';
+
+  //       document.getElementById(`0${index}`).innerText = '__';
+  //       document.getElementById(`0${index}`).style = 'color: white';
+  //     }
+
+  //   } else if (GameState.rotated % 270 === 0) {
+
+  //   } else if (GameState.rotated % 180 === 0) {
+
+  //   } else {
+
+  //   }
+  // },
 
   addPiece: (cellNumber, xOrO) => {
     if (cellNumber[0] === '0') {
@@ -45,6 +101,9 @@ var UserInput = {
         }
       }
     }
+    if (GameState.gravity) {
+      UserInput.rotator();
+    }
   },
 
   clickHandler: (cellNumber) => {
@@ -59,6 +118,7 @@ var UserInput = {
       } else {
         GameState.xTurn = false;
       }
+      element.style = 'color: black';
       element.innerText = xOrO;
 
       UserInput.addPiece(cellNumber, xOrO);
@@ -77,12 +137,24 @@ var UserInput = {
     var tableButtons = document.getElementsByClassName('table');
     for (let button of tableButtons) {
       button.innerText = '__';
+      button.style = 'color: white';
     }
     if (GameState.winnerLastRound === 'X') {
       GameState.xTurn = true;
     } else {
       GameState.xTurn = false;
     }
+    //animate table back to zero
+    var table = document.getElementById('rotate');
+    if (GameState.gravity) {
+      table.animate([
+        {'transform': `rotate(${GameState.rotated}deg)`},
+        {'transform': `rotate(0deg)`}
+      ], {duration: 1000}
+      );
+    }
+    table.style = `transform: rotate(0deg)`;
+    GameState.rotated = 0;
   },
 
   resetScore: () => {

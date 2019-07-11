@@ -23,28 +23,27 @@
         <p style="margin-left: -2em; margin-bottom: -1.2em; margin-top: 1.5em">O's:</p>
         <div id="oname2" style="float:left; margin-right: 2.5em"><input hidden type="text"></div>
       </div>
-      <table style="float: left">
+      <table style="float: left" id="rotate">
         <tbody>
           <td>
             <tr>
-              <td><button id="00" class="table" onclick="UserInput.clickHandler('00')">__</button></td>
-              <td><button id="01" class="table" onclick="UserInput.clickHandler('01')">__</button></td>
-              <td><button id="02" class="table" onclick="UserInput.clickHandler('02')">__</button></td>
+              <td><button id="00" style="color:white" class="table" onclick="UserInput.clickHandler('00')">__</button></td>
+              <td><button id="01" style="color:white" class="table" onclick="UserInput.clickHandler('01')">__</button></td>
+              <td><button id="02" style="color:white" class="table" onclick="UserInput.clickHandler('02')">__</button></td>
             </tr>
             <tr>
-              <td><button id="10" class="table" onclick="UserInput.clickHandler('10')">__</button></td>
-              <td><button id="11" class="table" onclick="UserInput.clickHandler('11')">__</button></td>
-              <td><button id="12" class="table" onclick="UserInput.clickHandler('12')">__</button></td>
+              <td><button id="10" style="color:white" class="table" onclick="UserInput.clickHandler('10')">__</button></td>
+              <td><button id="11" style="color:white" class="table" onclick="UserInput.clickHandler('11')">__</button></td>
+              <td><button id="12" style="color:white" class="table" onclick="UserInput.clickHandler('12')">__</button></td>
             </tr>
             <tr>
-              <td><button id="20" class="table" onclick="UserInput.clickHandler('20')">__</button></td>
-              <td><button id="21" class="table" onclick="UserInput.clickHandler('21')">__</button></td>
-              <td><button id="22" class="table" onclick="UserInput.clickHandler('22')">__</button></td>
+              <td><button id="20" style="color:white" class="table" onclick="UserInput.clickHandler('20')">__</button></td>
+              <td><button id="21" style="color:white" class="table" onclick="UserInput.clickHandler('21')">__</button></td>
+              <td><button id="22" style="color:white" class="table" onclick="UserInput.clickHandler('22')">__</button></td>
             </tr>
           </td>
         </tbody>
       </table>
-
       <div><h4 style="text-align:center"><u>SCORE</u></h4></div>
       <div>
         <p id="xscore" style="text-align:center; padding-right:13em">X: 0</p>
@@ -52,6 +51,8 @@
       <div>
         <p id="oscore" style="text-align:center; padding-right:13em">O: 0</p>
       </div>
+      <p>Spin-Gravity ON/OFF:</p>
+      <div id="checkDiv"><input class="check" type="checkbox" checked onclick="UserInput.changeGravity()"></div>
       <input type="button" value="Reset Game" style="float: left; margin-left:13px" onclick="UserInput.resetGame()">
       <input type="button" value="Reset Score" style="float: left; margin-left:18em" onclick="UserInput.resetScore()">
       <br>
