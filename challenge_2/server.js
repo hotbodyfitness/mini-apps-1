@@ -16,20 +16,14 @@ app.use(express.urlencoded({ extended: false })); // for <textarea>
 app.use(JSONtoCSV());
 
 app.post('/', (req, res) => {
-  var obj = req.body.Zack;
-  console.log('obj', obj);
-  // fs.readFile(obj, 'utf8', (err, result) => {
-  //   if (err) {
-  //     console.log('ERROR');
-  //   } else {
-  //     console.log('PARSED!', JSON.parse(result));
-  //   }
-  // });
-
-  // if (obj[obj.length-1] === ';') {  // for <textarea>
+  // var obj = req.body.Zack; // for <textarea>
+  // if (obj[obj.length - 1] === ';') { // for <textarea>
   //   obj = obj.slice(0, -1);
   // }
-  // var obj1 = JSON.parse(obj);
+  // var obj1 = JSON.parse(obj); // for <textarea>
+
+  var obj1 = req.body;
+  console.log('OBJECT!!', obj1);
 
   var columns = Object.keys(obj1).slice(0, -1); // removes children column
   var finalCSVarray = [columns];
@@ -56,7 +50,8 @@ app.post('/', (req, res) => {
     }
   };
   recurse(obj1);
-
   var csv = res.csv(finalCSVarray);
+  console.log('CSV', csv);
   res.send(csv);
+  // res.end();
 });

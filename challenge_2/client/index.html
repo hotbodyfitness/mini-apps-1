@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="app.js"></script>
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
+
 <body>
   <header>
     <h1>CSV Converter</h1>
   </header>
   <div id="form">
-    <form method="POST" action="/" id="postit">
-      <!-- <textarea name="Zack"></textarea> -->
-      <input id="thefile" type="file" name="Zack">
-      <input id="postButton" type="submit">
+    <form id="postit" enctype="multipart/form-data">
+      <fieldset>
+        <!-- <textarea name="Zack"></textarea> -->
+        <input id="thefile" type="file" accept="json" name="Zack">
+        <input id="postButton" type="submit">
+      </fieldset>
     </form>
   </div>
-  <!-- <script>document.getElementById("postit").addEventListener('click', function(event){event.preventDefault();});</script> -->
+  <script src="app.js"></script>
 </body>
-</html>
 
+</html>
