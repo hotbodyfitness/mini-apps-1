@@ -26,7 +26,7 @@ var form = document.getElementById('postit');
     reader.readAsText(file);
   }
 
-  var callback = (fileData) => {
+  var sendXML = (fileData) => {
     var obj = fileData;
     if (obj[obj.length - 1] === ';') { // remove ;
       obj = obj.slice(0, -1);
@@ -39,4 +39,4 @@ var form = document.getElementById('postit');
   };
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    readFile(callback)});
+    readFile(sendXML)});

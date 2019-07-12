@@ -1,10 +1,10 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var JSONtoCSV = require('express-json-2-csv');
-// var jsonfile = require('jsonfile');
-// var fs = require('fs');
-// var FileReader = require('filereader');
+// var path = require('path').join(__dirname, '/client/index.html');
+// var JSONtoCSV = require('express-json-2-csv');
+var { Parser } = require('json2csv');
+var fs = require('file-system');
 
 app.listen(8080, () => {
   console.log('Express is listening on port 8080');
@@ -13,7 +13,7 @@ app.listen(8080, () => {
 app.use(express.static('client'));
 app.use(bodyParser.json(/*{ type: 'application/*+json' }*/));
 app.use(express.urlencoded({ extended: false })); // for <textarea>
-app.use(JSONtoCSV());
+// app.use(JSONtoCSV());
 
 app.post('/', (req, res) => {
   // var obj = req.body.Zack; // for <textarea>
@@ -23,11 +23,9 @@ app.post('/', (req, res) => {
   // var obj1 = JSON.parse(obj); // for <textarea>
 
   var obj1 = req.body;
-  // console.log('OBJECT!!', obj1);
 
-  var columns = Object.keys(obj1).slice(0, -1); // removes children column
-  var finalCSVarray = [columns];
-  console.log('CSV', finalCSVarray);
+  var columns = Object.keys(obj1).slice(0, -1); // removes "children" key from columns
+  var finalCSVarray = [];
 
   var recurse = (object) => {
     finalCSVarray.push(Object.values(object).slice(0, -1));
@@ -35,11 +33,10 @@ app.post('/', (req, res) => {
     // handles extra keys that may not be on the parent
     var keys = Object.keys(object).slice(0, -1);
     for (let key of keys) {
-      if (!finalCSVarray[0].includes(key)) {
-        finalCSVarray[0].push(key);
+      if (!columns.includes(key)) {
+        columns.push(key);
       }
     }
-
     if (Object.keys(object).includes('children')) {
       var index = Object.keys(object).indexOf('children');
       var children = Object.values(object)[index];
@@ -51,14 +48,18 @@ app.post('/', (req, res) => {
     }
   };
   recurse(obj1);
-  // console.log('finalCSVarray', finalCSVarray);
-  // for (let array of finalCSVarray) {
-  //   for (let i in array) {
-  //     array[i] = JSON.stringify(array[i]);
-  //   }
-  // }
-  var csv = res.csv(finalCSVarray);
-  console.log('CSV', csv);
-  res.send(csv);
-  // res.end(csv);
+  finalCSVarray.unshift(columns);
+  // var csv = res.csv(finalCSVarray);
+  var json2csvParser = new Parser({ columns });
+  var csv = json2csvParser.parse(finalCSVarray);
+  fs.writeFile('client.csv', csv, (err) => {
+    if (err) { console.log(err);
+    } else {
+      res.sendFile('client.csv', {root: __dirname}, (err) => {
+        if (err) { console.log(err);
+        } else { console.log('Sent: client.csv'); res.end();}
+      });
+    }
+  });
+
 });
