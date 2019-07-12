@@ -23,10 +23,11 @@ app.post('/', (req, res) => {
   // var obj1 = JSON.parse(obj); // for <textarea>
 
   var obj1 = req.body;
-  console.log('OBJECT!!', obj1);
+  // console.log('OBJECT!!', obj1);
 
   var columns = Object.keys(obj1).slice(0, -1); // removes children column
   var finalCSVarray = [columns];
+  console.log('CSV', finalCSVarray);
 
   var recurse = (object) => {
     finalCSVarray.push(Object.values(object).slice(0, -1));
@@ -50,8 +51,14 @@ app.post('/', (req, res) => {
     }
   };
   recurse(obj1);
+  // console.log('finalCSVarray', finalCSVarray);
+  // for (let array of finalCSVarray) {
+  //   for (let i in array) {
+  //     array[i] = JSON.stringify(array[i]);
+  //   }
+  // }
   var csv = res.csv(finalCSVarray);
   console.log('CSV', csv);
   res.send(csv);
-  // res.end();
+  // res.end(csv);
 });

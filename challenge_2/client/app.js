@@ -26,15 +26,15 @@ var form = document.getElementById('postit');
     reader.readAsText(file);
   }
 
-  var callback = (data) => {
-    var obj = data;
+  var callback = (fileData) => {
+    var obj = fileData;
     if (obj[obj.length - 1] === ';') { // remove ;
       obj = obj.slice(0, -1);
     }
     var XML = new XMLHttpRequest();
     // XML.responseType = 'json';
-    XML.open('POST', '/', true);
-    XML.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    XML.open('POST', '/');
+    XML.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
     XML.send(obj);
   };
   form.addEventListener('submit', (event) => {
