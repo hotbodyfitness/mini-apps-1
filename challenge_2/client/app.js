@@ -5,12 +5,13 @@
 $(document).ready(function() {
   // $('#form').text('hey');
 
-  // $('#postButton').on('click', () => {
-  //   var input = $('#jsonInput').val();
-  //   console.log(input);
-  // });
+  $('#postButton').on('click', () => {
+    var input = $('#thefile').val();
+    console.log(input);
+  });
 
 
 
 
 });
+
