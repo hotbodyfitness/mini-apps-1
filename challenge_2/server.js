@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: false })); // for raw XML requests
 // app.use(JSONtoCSV());
 
 var csv;
+
 app.post('/', (req, res) => {
   // var obj = req.body.Zack; // for <textarea>
   // if (obj[obj.length - 1] === ';') { // for <textarea>
@@ -59,17 +60,15 @@ app.post('/', (req, res) => {
   console.log('CSV*******', csv);
 
   fs.writeFile('./client/client.csv', csv, (err) => {
+    // date/time name the file
     if (err) { console.log(err);
     } else {
-      res.send('/client.csv');
-      // res.sendFile('client.csv', {root: __dirname}, (err) => {
-      //   if (err) { console.log(err);
-      //   } else { console.log('Sent: client.csv'); res.send('client.csv'); }
-      // });
+      var myObj = {
+        data: csv,
+        link: '/client.csv'
+      };
+      res.send(myObj);
     }
   });
-}); // closes app.post('/')
 
-app.get('/client.csv', (req, res) => {
-  res.send('/client.csv');
-});
+}); // closes app.post('/')

@@ -12,14 +12,18 @@ var form = document.getElementById('postit');
 // }
 
 var successfulPost = (result) => { // callback for AJAX Post
-  console.log('successfulPOST!', result);
-  $.ajax({
-    method: 'GET',
-    url: result,
-    success: (getResult) => {
-      console.log('successfulGET!', getResult);
-    }
+  var link = `<br><div id="link"><a href="localhost:8080${result.link}">Link to CSV<\/a><\/div>`;
+  $('#link').html(link);
+
+  var template = `<div>`;
+  var array = result.data.split('\n');
+  array.forEach(element => {
+    element = element.replace(/,/g, '  |  ');
+    element = element.replace(/"/g, '');
+    template += `<p>${element}<\/p>`;
   });
+  template += `<\/div>`;
+  $('#template').html(template);
 };
 
 var sendToServer = (fileData) => {
@@ -27,7 +31,6 @@ var sendToServer = (fileData) => {
   if (obj[obj.length - 1] === ';') { // remove ';' if exists
     obj = obj.slice(0, -1);
   }
-  console.log(obj);
   $.ajax({
     method: 'POST',
     url: '/',
