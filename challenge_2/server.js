@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 // var path = require('path').join(__dirname, '/client/index.html');
-// var JSONtoCSV = require('express-json-2-csv');
+// var JSONtoCSV = require('express-json-2-csv'); // this middleware worked well for <textarea> but had bugs when client uploads a file thru a form
 var { Parser } = require('json2csv');
 var fs = require('file-system');
 
@@ -12,18 +12,19 @@ app.listen(8080, () => {
 
 app.use(express.static('client'));
 app.use(bodyParser.json(/*{ type: 'application/*+json' }*/));
-app.use(express.urlencoded({ extended: false })); // for <textarea>
+app.use(express.urlencoded({ extended: false })); // for raw XML requests
 // app.use(JSONtoCSV());
 
+var csv;
 app.post('/', (req, res) => {
   // var obj = req.body.Zack; // for <textarea>
   // if (obj[obj.length - 1] === ';') { // for <textarea>
   //   obj = obj.slice(0, -1);
   // }
   // var obj1 = JSON.parse(obj); // for <textarea>
+  // var obj1 = req.body; // for <input type="file">
 
-  var obj1 = req.body;
-
+  var obj1 = JSON.parse(Object.keys(req.body)[0]); // for <textarea> with AJAX call!!!
   var columns = Object.keys(obj1).slice(0, -1); // removes "children" key from columns
   var finalCSVarray = [];
 
@@ -49,17 +50,26 @@ app.post('/', (req, res) => {
   };
   recurse(obj1);
   finalCSVarray.unshift(columns);
-  // var csv = res.csv(finalCSVarray);
-  var json2csvParser = new Parser({ columns });
-  var csv = json2csvParser.parse(finalCSVarray);
-  fs.writeFile('client.csv', csv, (err) => {
+  // var csv = res.csv(finalCSVarray); // no longer using this middleware
+  var json2csvParser = new Parser({ columns }); // new csv middleware
+  csv = json2csvParser.parse(finalCSVarray);
+  csv = csv.split('\n');
+  csv.shift();
+  csv = csv.join('\n');
+  console.log('CSV*******', csv);
+
+  fs.writeFile('./client/client.csv', csv, (err) => {
     if (err) { console.log(err);
     } else {
-      res.sendFile('client.csv', {root: __dirname}, (err) => {
-        if (err) { console.log(err);
-        } else { console.log('Sent: client.csv'); res.end();}
-      });
+      res.send('/client.csv');
+      // res.sendFile('client.csv', {root: __dirname}, (err) => {
+      //   if (err) { console.log(err);
+      //   } else { console.log('Sent: client.csv'); res.send('client.csv'); }
+      // });
     }
   });
+}); // closes app.post('/')
 
+app.get('/client.csv', (req, res) => {
+  res.send('/client.csv');
 });
