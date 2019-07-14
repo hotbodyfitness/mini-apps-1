@@ -7,20 +7,28 @@
 
 <body>
   <header>
-    <h1>CSV Converter</h1>
+    <h1 style="color:darkcyan">JSON —> CSV Converter</h1>
   </header>
   <div id="form">
     <form id="postit">
-    <!-- <form id="postit" enctype="multipart/form-data"> -->
-    <!-- <form id="postit" method="POST" action="/"> -->
-      <!-- <fieldset> -->
-        <textarea name="Zack"></textarea>
-        <!-- <input id="thefile" type="file" accept="json" name="Zack"> -->
-        <input id="postButton" type="submit">
-      <!-- </fieldset> -->
+    <!-- <form id="postit" method="POST" action="/" enctype="multipart/form-data"> -->
+      <fieldset style="border-color:darkcyan">
+          <legend>Select a . JSON file</legend>
+        <input id="thefile" type="file" accept="json" name="Zack">
+        <input id="postFile" type="submit">
+      </fieldset>
+      <br>
+      <p style="margin-left:2em; color:darkcyan""><b>OR</b></p>
+      <br>
+      <fieldset style="border-color:darkcyan">
+        <legend>Type in a JSON object</legend>
+        <textarea cols="38" name="Zack"></textarea>
+        <input id="postText" type="submit">
+      </fieldset>
     </form>
     <div id="link"></div>
-    <div style="float:right" id="template"></div>
+    <h5 style="zoom:130%; color:white">Here's Your Converted Text:</h5>
+    <div style="display: grid; grid-template-rows: repeat(auto-fit, minmax(100px, 100px));" id="template"></div>
   </div>
   <script src="app.js"></script>
 </body>

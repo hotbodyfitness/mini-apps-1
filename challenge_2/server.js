@@ -18,14 +18,13 @@ app.use(express.urlencoded({ extended: false })); // for raw XML requests
 var csv;
 
 app.post('/', (req, res) => {
-  // var obj = req.body.Zack; // for <textarea>
-  // if (obj[obj.length - 1] === ';') { // for <textarea>
+  // var obj = req.body.Zack; // for <textarea> default
+  // if (obj[obj.length - 1] === ';') { // for <textarea> default
   //   obj = obj.slice(0, -1);
   // }
-  // var obj1 = JSON.parse(obj); // for <textarea>
-  // var obj1 = req.body; // for <input type="file">
+  // var obj1 = JSON.parse(obj); // for <textarea> default
 
-  var obj1 = JSON.parse(Object.keys(req.body)[0]); // for <textarea> with AJAX call!!!
+  var obj1 = JSON.parse(Object.keys(req.body)[0]); // for AJAX call!!!
   var columns = Object.keys(obj1).slice(0, -1); // removes "children" key from columns
   var finalCSVarray = [];
 

@@ -1,29 +1,40 @@
 // $(document).ready(function() {});
-var form = document.getElementById('postit');
 
-// var readFile = (cb) => {
-//   var reader = new FileReader();
-//   var file = document.getElementById('thefile').files[0];
-//   // console.log('FILE APP.js', file);
-//   reader.addEventListener('loadend', () => {
-//     cb(reader.result);
-//   });
-//   reader.readAsText(file);
-// }
+var readFile = (cb) => {
+  var reader = new FileReader();
+  var file = document.getElementById('thefile').files[0];
+  reader.addEventListener('loadend', () => {
+    cb(reader.result);
+  });
+  reader.readAsText(file);
+};
 
 var successfulPost = (result) => { // callback for AJAX Post
-  var link = `<br><div id="link"><a href="localhost:8080${result.link}">Link to CSV<\/a><\/div>`;
+  var link = `<br><br><div id="link"><b><a href="localhost:8080${result.link}" target="_blank" rel="noopener" style="color:darkcyan">Click Here to Download CSV<\/a><\/b><\/div>`;
   $('#link').html(link);
 
   var template = `<div>`;
   var array = result.data.split('\n');
-  array.forEach(element => {
-    element = element.replace(/,/g, '  |  ');
+  array.forEach((element, index) => {
+    var innerTemplate = '';
+    if (index === 0) {
+      innerTemplate += `<b><u>`;
+    }
+    innerTemplate += `<span style="display: grid; grid-template-columns: repeat(auto-fit, minmax(50px, 150px));">`;
     element = element.replace(/"/g, '');
-    template += `<p>${element}<\/p>`;
+    var arr = element.split(',');
+      arr.forEach((word) => {
+        innerTemplate += `<p>${word}<\/p>`;
+      });
+      innerTemplate += '<\/span>';
+      if (index === 0) {
+        innerTemplate += `<\/b><\/u>`;
+      }
+      template += innerTemplate;
   });
   template += `<\/div>`;
   $('#template').html(template);
+  $('h5').css('color', 'rgb(76, 76, 76)');
 };
 
 var sendToServer = (fileData) => {
@@ -46,8 +57,15 @@ var sendToServer = (fileData) => {
   // XML.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
   // XML.send(obj);
 };
-form.addEventListener('submit', (event) => {
+
+var textForm = document.getElementById('postText'); // button
+var fileForm = document.getElementById('postFile'); // button
+
+textForm.addEventListener('click', (event) => {
   event.preventDefault();
-  // readFile(sendToServer); // for file data
   sendToServer( $('textarea').val() ); // for <textarea>
+});
+fileForm.addEventListener('click', (event) => {
+  event.preventDefault();
+  readFile(sendToServer); // for file data
 });
