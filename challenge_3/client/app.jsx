@@ -58,6 +58,19 @@ var CompletedForm = ({params}) => {
   );
 };
 
+var sendAjaxToServer = (params) => {
+  // var data = params.flat().flat();
+  var data = params.flat();
+  var obj = {};
+  data.forEach((e) => {obj[e[0]] = e[1]});
+  console.log('AJAX OBJ: ', obj);
+  $.ajax({
+    method: 'POST',
+    data: obj,
+    success: (res) => {console.log('Successful Post!')}
+  });
+};
+
 // var Inputs = (props) => {
 // var inputThis = '';
 // var formObj = props.forms[props.key];
@@ -130,6 +143,7 @@ class FormNumber extends React.Component {
         params: newParams
       });
     }
+    sendAjaxToServer(this.state.params);
   }
 
   render() {
