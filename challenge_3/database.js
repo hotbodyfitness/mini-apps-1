@@ -1,9 +1,10 @@
 var mysql = require('mysql');
 
 var db = mysql.createConnection({
+  // host: 'localhost',
   user: 'root',
   password: '',
-  name: 'cart'
+  database: 'cart' // make sure these 3 params are here!!!
 });
 
 // tests connection

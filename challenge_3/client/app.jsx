@@ -41,7 +41,7 @@ var Forms = [
   }
 ];
 
-var CompletedForm = ({params}) => {
+var CompletedForm = ({ params }) => {
   var circle = "circle";
   var arrConcat = [];
   params.params.forEach((e) => {
@@ -52,7 +52,7 @@ var CompletedForm = ({params}) => {
     <div><ul>
       <h4><u>Account Summary</u></h4>
       {arrConcat.map((e, i) => {
-          return (<li type={circle} key={i}><b>{e[0]} </b>{e[1]}</li>);
+        return (<li type={circle} key={i}><b>{e[0]}: </b>{e[1]}</li>);
       })}
     </ul></div>
   );
@@ -62,12 +62,12 @@ var sendAjaxToServer = (params) => {
   // var data = params.flat().flat();
   var data = params.flat();
   var obj = {};
-  data.forEach((e) => {obj[e[0]] = e[1]});
-  console.log('AJAX OBJ: ', obj);
+  data.forEach((e) => { obj[e[0]] = e[1] });
+  // console.log('AJAX OBJ: ', obj);
   $.ajax({
     method: 'POST',
     data: obj,
-    success: (res) => {console.log('Successful Post!')}
+    success: (res) => { console.log('Successful Post!') }
   });
 };
 
@@ -121,6 +121,7 @@ class FormNumber extends React.Component {
         break;
       } else {
         var obj = [];
+        allclasses[n] = allclasses[n].slice(0, -1); // gets rid of ':'
         obj[0] = `${allclasses[n]}`;
         obj[1] = `${allIds[n].value}`;
         ids.push(obj);
@@ -129,7 +130,8 @@ class FormNumber extends React.Component {
 
     if (this.state.form === 4) {
       this.setState({
-        form: 0
+        form: 0,
+        params: []
       });
     } else if (this.state.form === 0) {
       this.setState({
@@ -144,12 +146,16 @@ class FormNumber extends React.Component {
       });
     }
     sendAjaxToServer(this.state.params);
+
+    // zeroing out the user-entered values below
+    if (id0 !== null) { id0.value = ''; id1.value = ''; id2.value = ''; }
+    if (id4 !== null) { id3.value = ''; id4.value = ''; }
   }
 
   render() {
     var formObj = this.props.forms[this.state.form];
     var ids = ['0', '1', '2', '3', '4'];
-    console.log(this.state.params);
+    // console.log(this.state.params);
     return (
       <div>
         <form>
