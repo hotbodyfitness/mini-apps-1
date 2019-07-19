@@ -1,7 +1,7 @@
-import checkHorizontal from "./checkHorizontal";
-import checkVertical from "./checkVertical";
-import checkDiagDown from "./checkDiagDown";
-import checkDiagUp from "./checkDiagUp";
+import checkHorizontal from "./checkHorizontal.js";
+import checkVertical from "./checkVertical.js";
+import checkDiagDown from "./checkDiagDown.js";
+import checkDiagUp from "./checkDiagUp.js";
 
 var checkWinner = (colorBoard, playerTurn) => {
   var winner;

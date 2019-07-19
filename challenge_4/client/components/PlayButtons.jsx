@@ -10,8 +10,9 @@ for (let i = 1; i <= 7; i++) {
   var obj = {padding: '5px', zoom: '140%', color: 'grey', gridColumnStart: i, gridRowStart: 1}
   buttonArray.push(obj);
 }
+var play = 'play';
   return (
-    <div style={gridStyle}>
+    <div className={play} style={gridStyle}>
       {buttonArray.map((e, col) => {
         return (<button style={e} key={col} onClick={() => (handlePlayPiece(col, boardArray, colorBoard, handleClick))}>Play ⬇︎ Here</button>);
       })}

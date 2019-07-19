@@ -1,0 +1,41 @@
+<html>
+
+<head>
+  <!-- Styling purposes only -->
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.2.0/mocha.css" />
+  <!-- <link rel="stylesheet" href="../node_modules/mocha/mocha.css" /> -->
+
+  <!-- CANNOT detect 'node_modules' bc server is not serving that folder -->
+
+  <!-- Nessesary node_modules and CDN's -->
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/6.2.0/mocha.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.js"></script>
+  <!-- <script src="../../node_modules/mocha/mocha.js"></script> -->
+  <!-- <script src="../../node_modules/chai/chai.js"></script> -->
+
+  <!-- Run Mocha -->
+  <script>
+    mocha.setup('bdd');
+    var expect = chai.expect;
+    $(function () {
+      mocha.run()
+      // window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run()
+    });
+  </script>
+
+  <!-- Source files -->
+  <!-- <script src="../client/helpers/checkWinner.js"></script> -->
+
+  <!-- Spec files -->
+  <script type="module" src="testWinningPatterns.js"></script>
+</head>
+
+<body>
+  <div id="mocha"></div>
+</body>
+
+</html>

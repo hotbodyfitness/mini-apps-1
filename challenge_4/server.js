@@ -4,12 +4,15 @@ var app = express();
 app.listen(8080);
 
 app.use(express.static('public')); // or /public
+
+app.use('/test', express.static('client/helpers')); // '/test' = path in the browser
+                                                    //  localhost:8080/test/SpecRunner.html
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  console.log('TYPEOF req.body', typeof req.body);
-  console.log('REQ.BODY', req.body);
+// app.get('/', (req, res) => {
+//   console.log('TYPEOF req.body', typeof req.body);
+//   console.log('REQ.BODY', req.body);
 
-  res.statusCode = 201;
-  res.end();
-});
+//   res.statusCode = 201;
+//   res.end();
+// });
