@@ -95,7 +95,7 @@ class ConnectFour extends React.Component {
 
   render() {
     var colorBoard = (this.state.turn === 'red') ? this.state.redBoard : this.state.blackBoard;
-    var buttonStyle = {padding: '10px', float: 'right', marginRight: '37px', marginTop: '-13.5px', zoom: '130%'}
+    var buttonStyle = {padding: '10px', position: 'absolute', top: '598px', right: '45px', zoom: '130%'}
     return (
       <div>
         <PlayButtons boardArray={this.state.board} handleClick={this.handleClick.bind(this)} colorBoard={colorBoard} />

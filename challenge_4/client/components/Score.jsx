@@ -7,7 +7,7 @@ var Score = ({score, message}) => {
     marginLeft: '145px', background: 'red', color: 'white', fontSize: '25.8px', padding: '5px', marginTop: '-43.5px', border: '2px solid white', width: '75px', zoom: '116%'
   };
   var blackSquare = {
-    marginLeft: '233px', background: 'black', color: 'white', fontSize: '25.86px', padding: '5px', marginTop: '-42.5px', border: '2px solid white', width: '75px', zoom: '116%'
+    marginLeft: '233px', background: 'black', color: 'white', fontSize: '25.86px', padding: '5px', marginTop: '-44px', border: '2px solid white', width: '75px', zoom: '116%'
   };
   var winningMessage = {
     marginLeft: '393px', marginTop: '-40px', fontSize: '22px', padding: '5px'
