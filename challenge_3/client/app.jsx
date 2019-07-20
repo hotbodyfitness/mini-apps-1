@@ -2,42 +2,42 @@ var Forms = [
   {
     pageName: 'Page F0',
     prefix: [''],
-    type: ['', '', '', '', '', 'submit'],
+    type: ['', '', '', '', '', '', 'submit'],
     placeholder: [''],
-    value: ['', '', '', '', '', 'Checkout'],
-    hidden: [true, true, true, true, true, false]
+    value: ['', '', '', '', '', '', 'Checkout'],
+    hidden: [true, true, true, true, true, true, false]
   },
   {
     pageName: 'Page F1',
-    prefix: ['Name: ', 'Email: ', 'Password: ', '', '', ''],
-    type: ['text', 'text', 'text', '', '', 'submit'],
-    placeholder: ['Your Name', 'email@url.com', 'un1quePa55word', '', '', ''],
-    value: ['', '', '', '', '', 'Next'],
-    hidden: [false, false, false, true, true, false]
+    prefix: ['Name: ', 'Email: ', 'Password: ', '', '', '', ''],
+    type: ['text', 'text', 'text', '', '', 'submit', 'submit'],
+    placeholder: ['Your Name', 'email@url.com', 'un1quePa55word', '', '', '', ''],
+    value: ['', '', '', '', '', 'Back', 'Next'],
+    hidden: [false, false, false, true, true, false, false]
   },
   {
     pageName: 'Page F2',
-    prefix: ['Street Address: ', 'City: ', 'State: ', 'Zip Code: ', 'Phone #: ', ''],
-    type: ['text', 'text', 'text', 'number', 'text', 'submit'],
-    placeholder: ['123 Oak St.', 'Anywhere', 'CA', '99999', '600-555-4321', ''],
-    value: ['', '', '', '', '', 'Next'],
-    hidden: [false, false, false, false, false, false]
+    prefix: ['Street Address: ', 'City: ', 'State: ', 'Zip Code: ', 'Phone #: ', '', ''],
+    type: ['text', 'text', 'text', 'number', 'text', 'submit', 'submit'],
+    placeholder: ['123 Oak St.', 'Anywhere', 'CA', '99999', '600-555-4321', '', ''],
+    value: ['', '', '', '', '', 'Back', 'Next'],
+    hidden: [false, false, false, false, false, false, false]
   },
   {
     pageName: 'Page F3',
-    prefix: ['Credit Card #: ', 'Exp: ', 'CVV code: ', 'Billing Zip Code: ', '', ''],
-    type: ['number', 'number', 'number', 'number', '', 'submit'],
-    placeholder: ['1234567887654321', '1220', '333', '99999', '', ''],
-    value: ['', '', '', '', '', 'Next'],
-    hidden: [false, false, false, false, true, false]
+    prefix: ['Credit Card #: ', 'Exp: ', 'CVV code: ', 'Billing Zip Code: ', '', '', ''],
+    type: ['number', 'number', 'number', 'number', '', 'submit', 'submit'],
+    placeholder: ['1234567887654321', '1220', '333', '99999', '', '', ''],
+    value: ['', '', '', '', '', 'Back', 'Next'],
+    hidden: [false, false, false, false, true, false, false]
   },
   {
     pageName: 'Confirmation Page F4',
     prefix: [''],
-    type: ['', '', '', '', '', 'submit'],
+    type: ['', '', '', '', '', 'submit', 'submit'],
     placeholder: [''],
-    value: ['', '', '', '', '', 'Purchase'],
-    hidden: [true, true, true, true, true, false]
+    value: ['', '', '', '', '', 'Back', 'Purchase'],
+    hidden: [true, true, true, true, true, false, false]
   }
 ];
 
@@ -71,32 +71,22 @@ var sendAjaxToServer = (params) => {
   });
 };
 
-// var Inputs = (props) => {
-// var inputThis = '';
-// var formObj = props.forms[props.key];
-// for (let i = 0; i < formObj.fields; i++) {
-//   inputThis += `<p>${formObj.prefix[i]}</p><input type=${formObj.type[i]} placeholder=${formObj.placeholder[i]}></input>`;
-// }
-//   return (
-//     <div>{inputThis}</div>
-//   );
-// };
-
-/* <Inputs forms={this.props.forms} key={this.state.form} /> */
 
 class FormNumber extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { // ********************STATE************************ //
       form: 0,
-      params: []
+      params: [],
+      back: false
     };
   }
 
   componentDidMount() {
     this.setState({
       form: 0,
-      params: []
+      params: [],
+      back: false
     });
   }
 
@@ -131,36 +121,83 @@ class FormNumber extends React.Component {
     if (this.state.form === 4) {
       this.setState({
         form: 0,
-        params: []
+        params: [],
+        back: false
       });
     } else if (this.state.form === 0) {
       this.setState({
         form: this.state.form + 1
       });
     } else {
-      var newParams = this.state.params;
-      newParams.push(ids);
+      var newParams = this.state.params.slice();
+
+      // check ids against existing ids!!!
+      if (this.state.back) {
+        newParams[this.state.form - 1] = ids;
+      } else {
+        // newParams[this.state.form] = ids;
+        // console.log('newParams[this.state.form]', newParams[this.state.form]);
+        // console.log('newParams[this.state.form - 1]', newParams[this.state.form - 1]);
+        newParams.push(ids);
+      }
+
       this.setState({
         form: this.state.form + 1,
         params: newParams
       });
+
     }
     sendAjaxToServer(this.state.params);
 
     // zeroing out the user-entered values below
     if (id0 !== null) { id0.value = ''; id1.value = ''; id2.value = ''; }
     if (id4 !== null) { id3.value = ''; id4.value = ''; }
+
+    // adding values back in if the next page already had them typed in
+    if (this.state.params[this.state.form]) {
+      id0.value = this.state.params[this.state.form][0][1];
+      id1.value = this.state.params[this.state.form][1][1];
+      id2.value = this.state.params[this.state.form][2][1];
+      if (this.state.params[this.state.form][3]) {
+        id3.value = this.state.params[this.state.form][3][1];
+        id4.value = this.state.params[this.state.form][4][1];
+      }
+    }
+  }
+
+  onBack(event) {
+    event.preventDefault();
+    this.setState({
+      form: this.state.form - 1,
+      back: true
+    }, () => {
+
+      // repopulate the entries from the prior page
+      var priorParams = this.state.params[this.state.form - 1];
+      var formClass = document.getElementsByClassName('formClass')[0].childNodes;
+      var step = 0;
+      for (var i = 2; i < formClass.length; i += 2) {
+        if (priorParams) {
+          if (priorParams[step]) {
+            formClass[i].value = priorParams[step][1];
+          }
+        }
+        step++;
+      }
+
+    });
   }
 
   render() {
     var formObj = this.props.forms[this.state.form];
     var ids = ['0', '1', '2', '3', '4'];
+    var formClass = 'formClass';
     // console.log(this.state.params);
     return (
       <div>
         <form>
           <legend>F{this.state.form} page</legend>
-          <fieldset>
+          <fieldset className={formClass}>
             {/* {formObj.prefix.map((e, i) => { // using formObj.prefix because it has the correct number of indexes
               <p>{formObj.prefix[i]}</p> <input type={formObj.type[i]} placeholder={formObj.placeholder[i]}></input>
             })} */}
@@ -170,7 +207,8 @@ class FormNumber extends React.Component {
             <p className={ids[2]}>{formObj.prefix[2]}</p>{formObj.hidden[2] ? <input hidden></input> : <input type={formObj.type[2]} id={ids[2]} placeholder={formObj.placeholder[2]}></input>}
             <p className={ids[3]}>{formObj.prefix[3]}</p>{formObj.hidden[3] ? <input hidden></input> : <input type={formObj.type[3]} id={ids[3]} placeholder={formObj.placeholder[3]}></input>}
             <p className={ids[4]}>{formObj.prefix[4]}</p>{formObj.hidden[4] ? <input hidden></input> : <input type={formObj.type[4]} id={ids[4]} placeholder={formObj.placeholder[4]}></input>}
-            <p>{formObj.prefix[5]}</p><input type={formObj.type[5]} onClick={this.onCheckout.bind(this)} value={formObj.value[5]}></input>
+            <p></p>{formObj.hidden[5] ? <input hidden></input> : <input type={formObj.type[5]} onClick={this.onBack.bind(this)} value={formObj.value[5]}></input>}
+            <input type={formObj.type[6]} onClick={this.onCheckout.bind(this)} value={formObj.value[6]}></input>
           </fieldset>
         </form>
       </div>

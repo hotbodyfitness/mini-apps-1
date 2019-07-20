@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var db = require('./database');
+var db = require('./database.js');
 var bodyParser = require('body-parser');
 app.listen(8080, () => {
   console.log('Express is listening on port 8080');
