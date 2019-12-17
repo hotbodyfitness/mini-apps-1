@@ -1,9 +1,9 @@
 module.exports = {
-  entry: __dirname + '/client/App.jsx',
+  entry: __dirname + '/client/index.js',
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.js|jsx$/,
         exclude: /node_moodules/,
         use: {
           loader: 'babel-loader',

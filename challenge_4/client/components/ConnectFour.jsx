@@ -1,5 +1,4 @@
-import React from 'react';
-import Board from './Board.jsx'; // when it's .jsx it must be explicitly referenced here
+import Board from './Board.jsx';
 import PlayButtons from './PlayButtons.jsx';
 import Score from './Score.jsx';
 import checkWinner from '../helpers/checkWinner.js';
@@ -47,8 +46,7 @@ class ConnectFour extends React.Component {
       var winnerBlack = checkWinner(this.state.blackBoard, 'black');
       var winnerRed = checkWinner(newColorBoard, playerTurn); // returns color of winner or false
     }
-     // returns color of winner or false
-    console.log(this.state.movesTaken);
+    // returns color of winner or false
     if (winnerBlack || winnerRed) {
       if (!this.state.winningMessage && (this.state.movesTaken - 1) % 2 === 0) { // both players have had equal turns
         if (winnerRed && winnerBlack) {
@@ -73,7 +71,6 @@ class ConnectFour extends React.Component {
         }
       }
     }
-    console.log('SCORE', this.state.score);
 
     this.setState({
       board: newBoard,
@@ -82,12 +79,8 @@ class ConnectFour extends React.Component {
       blackBoard: playerTurn === 'red' ? this.state.blackBoard : newColorBoard,
       turn: playerTurn === 'red' ? 'black' : 'red',
     });
-    if (newBoard.length === 42) { // board is full
-      // clear boards and log a game over
+    if (newBoard.length === 42 && this.state.winningMessage == '') { // board is full
       this.setState({
-        board: [],
-        redBoard: [],
-        blackBoard: [],
         winningMessage: 'No win this time'
       });
     }
@@ -95,13 +88,14 @@ class ConnectFour extends React.Component {
 
   render() {
     var colorBoard = (this.state.turn === 'red') ? this.state.redBoard : this.state.blackBoard;
-    var buttonStyle = {padding: '10px', position: 'absolute', top: '598px', right: '45px', zoom: '130%'}
     return (
       <div>
-        <PlayButtons boardArray={this.state.board} handleClick={this.handleClick.bind(this)} colorBoard={colorBoard} />
-        <Board />
-        <Score score={this.state.score} message={this.state.winningMessage} />
-        <button onClick={this.refreshState.bind(this)} style={buttonStyle}><b>New Game</b></button>
+        <center><h1>Connect Four</h1></center>
+        <div>
+          <PlayButtons boardArray={this.state.board} handleClick={this.handleClick.bind(this)} colorBoard={colorBoard} />
+          <Board />
+          <Score score={this.state.score} message={this.state.winningMessage} refresh={this.refreshState.bind(this)} turn={this.state.turn}/>
+        </div>
       </div>
     );
   }

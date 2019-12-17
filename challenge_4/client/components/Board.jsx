@@ -1,4 +1,4 @@
-var Board = (props) => {
+var Board = () => {
   var styler = {
     margin: '0 50px', display: 'grid', gridGap: 0,
     gridTemplateRows: 'repeat(auto)', gridTemplateColumns: 'repeat(auto)', border: '2px solid #858585'
