@@ -10,7 +10,7 @@
     "express-json-2-csv": "^0.2.2",
     "file-system": "^2.2.2",
     "filereader": "^0.10.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "json2csv": "^4.5.2",
     "path": "^0.12.7"
   },
